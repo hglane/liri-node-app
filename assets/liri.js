@@ -52,7 +52,8 @@ var getMyBands = function(artist) {
                 return;
             }
 
-            console.log("Here's when you can go see " + artist + ":");
+            console.log("Here's when & where you can go see " + artist + ":");
+            console.log('--------------------------------------------------------------------------------------------------')
 
             for (var i = 0; i < jsonData.length; i++) {
                 var show = jsonData[i];
