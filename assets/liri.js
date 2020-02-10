@@ -30,10 +30,11 @@ var getMeSpotify = function (songName) {
 
             for (var i = 0; i < songs.length; i++) {
                 console.log(i);
-                console.log("song name: " + songs[i].name);
-                console.log("preview song: " + songs[i].preview_url);
-                console.log("album " + songs[i].album.name);
-                console.log("----------------------------");
+                console.log("Artist: " + songs[i].artists[0].name)
+                console.log("Song: " + songs[i].name);
+                console.log("Preview Song: " + songs[i].preview_url);
+                console.log("Album: " + songs[i].album.name);
+                console.log("----------------------------------------------------------------------------------------------------------");
             }
         }
     );
