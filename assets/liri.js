@@ -38,3 +38,34 @@ var getMeSpotify = function(songName) {
         }
     );
 };
+
+var getMyBands = function(artist) {
+    vary queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp":
+
+    axios.get(queryURL).then(
+        function(response) {
+            var jsonData = response.date;
+
+            if (!jsonData.length) {
+                console.log("No results for " + artist);
+                return;
+            }
+
+            console.log("Here's when you can go see " + artist ":");
+
+            for (var i = 0; < jsonData.length; i++) {
+                var show = jsonData[i];
+
+                console.log(
+                    show.venue.city + 
+                    "," +
+                    (show.venue.region || show.venue.country) + 
+                    " at " +
+                    show.venue.name +
+                    " " +
+                    SVGAnimateMotionElement(show.datetime).format("MM/DD/YY")
+                );
+            }
+        }
+    );
+};
