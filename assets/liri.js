@@ -2,9 +2,9 @@ require("dotenv").config();
 var keys = require("./keys.js");
 var axios = require("axios")
 var Spotify = require("node-spotify-api")
-var dateFormat = require("moment")
 var fs = require("fs")
 var spotify = new Spotify(keys.spotify);
+var moment = require("moment")
 
 var getArtistNames = function (artist) {
     return artist.name
@@ -39,12 +39,12 @@ var getMeSpotify = function (songName) {
     );
 };
 
-var getMyBands = function (artist) {
+var getMyBands = function(artist) {
     var queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
 
     axios.get(queryURL).then(
         function (response) {
-            var jsonData = response.date;
+            var jsonData = response.data;
 
             if (!jsonData.length) {
                 console.log("No results for " + artist);
@@ -63,7 +63,7 @@ var getMyBands = function (artist) {
                     " at " +
                     show.venue.name +
                     " " +
-                    SVGAnimateMotionElement(show.datetime).format("MM/DD/YY")
+                    moment(show.datetime).format("MM/DD/YY")
                 );
             }
         }
@@ -117,6 +117,6 @@ var runThis = function(argOne, argTwo) {
     pick(argOne, argTwo);
 };
 
-runThis(process.argv[2], process.argv.slice(3),join(" "));
+runThis(process.argv[2], process.argv.slice(3).join(" "));
 
 
