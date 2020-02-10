@@ -6,11 +6,11 @@ var dateFormat = require("moment")
 var fs = require("fs")
 var spotify = new Spotify(keys.spotify);
 
-var getArtistNames = function(artist) {
+var getArtistNames = function (artist) {
     return artist.name
 };
 
-var getMeSpotify = function(songName) {
+var getMeSpotify = function (songName) {
     if (songName === undefined) {
         songName = "What's my age again?";
     }
@@ -20,7 +20,7 @@ var getMeSpotify = function(songName) {
             type: "track",
             query: songName
         },
-        function(err, data) {
+        function (err, data) {
             if (err) {
                 console.log("Error occured: " + err);
                 return;
@@ -39,11 +39,11 @@ var getMeSpotify = function(songName) {
     );
 };
 
-var getMyBands = function(artist) {
-    vary queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp":
+var getMyBands = function (artist) {
+    var queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
 
     axios.get(queryURL).then(
-        function(response) {
+        function (response) {
             var jsonData = response.date;
 
             if (!jsonData.length) {
@@ -51,15 +51,15 @@ var getMyBands = function(artist) {
                 return;
             }
 
-            console.log("Here's when you can go see " + artist ":");
+            console.log("Here's when you can go see " + artist + ":");
 
-            for (var i = 0; < jsonData.length; i++) {
+            for (var i = 0; i < jsonData.length; i++) {
                 var show = jsonData[i];
 
                 console.log(
-                    show.venue.city + 
+                    show.venue.city +
                     "," +
-                    (show.venue.region || show.venue.country) + 
+                    (show.venue.region || show.venue.country) +
                     " at " +
                     show.venue.name +
                     " " +
@@ -69,3 +69,54 @@ var getMyBands = function(artist) {
         }
     );
 };
+
+var getMeMovie = function (movieName) {
+    if (movieName === undefined) {
+        movieName = "Can't seem to find that movie :(";
+    }
+
+    var urlHit = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=full&tomatoes=true&apikey=trilogy";
+
+    axios.get(urlHit).then(
+        function (response) {
+            var jsonData = response.data;
+
+            console.log("Title: " + jsonData.Title);
+            console.log("Year: " + jsonData.Year);
+            console.log("Rated: " + jsonData.Rated);
+            console.log("IMDB Rating: " + jsonData.Rated);
+            console.log("Country " + jsonData.Country);
+            console.log("Language: " + jsonData.Language);
+            console.log("Plot: " + jsonData.Plot);
+            console.log("Actors: " + jsonData.Actors);
+            console.log("Rotten Tomatoes Rating: " + jsonData.Ratings[1].Value);
+        }
+    );
+};
+
+var pick = function (caseData, functionData) {
+    switch (caseData) {
+    case "concert-this":
+        getMyBands(functionData);
+        break;
+    case "spotify-this-song":
+        getMeSpotify(functionData);
+        break;
+    case "movie-this":
+        getMeMovie(functionData);
+        break;
+    case "do-what-it-says":
+        doWhatItSays();
+        break;
+    default:
+        console.log("LIRI doesn't have that knowledge");
+    }
+};
+
+var runThis = function(argOne, argTwo) {
+    pick(argOne, argTwo);
+};
+
+runThis(process.argv[2], process.argv.slice(3),join(" "));
+
+
